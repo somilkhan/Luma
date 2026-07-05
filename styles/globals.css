@@ -1,1 +1,116 @@
 @import "tailwindcss";
+
+@theme {
+  --color-background: #000000;
+  --color-primary-surface: #0A0A0A;
+  --color-secondary-surface: #111111;
+  --color-glass-surface: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-primary-text: #FFFFFF;
+  --color-secondary-text: #B3B3B3;
+  --color-muted-text: #7A7A7A;
+  --color-divider: rgba(255, 255, 255, 0.06);
+  --color-focus-ring: rgba(255, 255, 255, 0.35);
+  --color-success: #22C55E;
+  --color-warning: #FACC15;
+  --color-error: #EF4444;
+
+  --radius-small: 0.25rem;
+  --radius-medium: 0.5rem;
+  --radius-large: 0.75rem;
+  --radius-extra-large: 1rem;
+  --radius-pill: 9999px;
+
+  --spacing-xxs: 0.125rem;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  --spacing-xxxl: 4rem;
+  --spacing-4xl: 6rem;
+  --spacing-5xl: 8rem;
+
+  --shadow-soft-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-soft-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-soft-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+
+  --blur-small: 4px;
+  --blur-medium: 8px;
+  --blur-large: 16px;
+
+  --animate-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal: 1040;
+  --z-index-popover: 1050;
+  --z-index-toast: 1060;
+}
+
+@utility glass {
+  background-color: var(--color-glass-surface);
+  backdrop-filter: blur(var(--blur-medium));
+  border: 1px solid var(--color-glass-border);
+  box-shadow: var(--shadow-soft-md);
+}
+
+@utility glass-sm {
+  background-color: var(--color-glass-surface);
+  backdrop-filter: blur(var(--blur-small));
+  border: 1px solid var(--color-glass-border);
+  box-shadow: var(--shadow-soft-sm);
+}
+
+@utility glass-lg {
+  background-color: var(--color-glass-surface);
+  backdrop-filter: blur(var(--blur-large));
+  border: 1px solid var(--color-glass-border);
+  box-shadow: var(--shadow-soft-lg);
+}
+
+/* Typography classes */
+@utility text-display {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+@utility text-heading {
+  font-size: 2.25rem;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@utility text-subheading {
+  font-size: 1.5rem;
+  line-height: 1.375;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+@utility text-body {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+@utility text-small {
+  font-size: 0.875rem;
+  line-height: 1.43;
+  font-weight: 400;
+}
+
+@utility text-caption {
+  font-size: 0.75rem;
+  line-height: 1.33;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
