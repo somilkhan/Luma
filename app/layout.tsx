@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   description: "Luma is a premium media platform for Movies, TV Shows, Anime, and Reading.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

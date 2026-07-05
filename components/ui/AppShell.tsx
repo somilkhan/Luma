@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Film, Sparkles, BookOpen, Search, Settings, Menu, X } from "lucide-react";
+import { FloatingDock } from "./FloatingDock";
 
 export interface AppShellProps {
   children: React.ReactNode;
@@ -14,7 +15,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const navigationItems = [
-    { name: "Cinema", href: "/cinema", icon: <Film className="w-5 h-5" /> },
+    { name: "Cinema", href: "/", icon: <Film className="w-5 h-5" /> },
     { name: "Anime", href: "/anime", icon: <Sparkles className="w-5 h-5" /> },
     { name: "Read", href: "/read", icon: <BookOpen className="w-5 h-5" /> },
   ];
@@ -146,7 +147,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
         {/* Main Content Area - padded to the right to clear Sidebar */}
         <div className="flex-1 flex flex-col min-h-[calc(100vh-64px)] md:pl-[280px]">
-          <main className="flex-1 px-6 py-12 md:px-12 md:py-16 max-w-7xl mx-auto w-full flex flex-col justify-center">
+          <main className="flex-1 px-6 py-12 md:px-12 md:py-16 max-w-7xl mx-auto w-full flex flex-col">
             {children}
           </main>
 
@@ -163,6 +164,8 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           </footer>
         </div>
       </div>
+      {/* Floating Navigation Dock */}
+      <FloatingDock />
     </div>
   );
 };
