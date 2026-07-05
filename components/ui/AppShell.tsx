@@ -24,7 +24,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   };
 
   const sidebarContent = (
-    <div className="flex flex-col h-full bg-primary-surface">
+    <div className="flex flex-col h-full bg-transparent">
       {/* Navigation Items */}
       <nav className="flex-1 px-4 py-6 space-y-2">
         {navigationItems.map((item) => {
@@ -50,16 +50,14 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         <div className="h-[1px] bg-divider my-4" />
 
         {/* Settings Item */}
-        <div className="px-4">
-          <div className="flex items-center justify-between text-muted-text text-body py-3 cursor-not-allowed select-none">
-            <span className="flex items-center gap-3">
-              <Settings className="w-5 h-5" />
-              <span>Settings</span>
-            </span>
-            <span className="text-caption bg-secondary-surface px-1.5 py-0.5 rounded-small border border-divider text-[10px] tracking-normal font-normal text-muted-text normal-case">
-              Soon
-            </span>
-          </div>
+        <div className="flex items-center justify-between gap-3 px-4 py-3 rounded-medium text-muted-text hover:text-secondary-text hover:bg-glass-surface/50 cursor-not-allowed select-none transition-all duration-200">
+          <span className="flex items-center gap-3">
+            <Settings className="w-5 h-5" />
+            <span className="text-body">Settings</span>
+          </span>
+          <span className="text-[10px] uppercase font-semibold tracking-wider text-muted-text/75 bg-secondary-surface border border-glass-border px-1.5 py-0.5 rounded-small">
+            Soon
+          </span>
         </div>
       </nav>
     </div>
@@ -68,13 +66,13 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   return (
     <div className="min-h-screen bg-background text-primary-text flex flex-col font-sans selection:bg-white/10 selection:text-white">
       {/* Fixed Header/Navbar (64px) */}
-      <header className="fixed top-0 left-0 right-0 h-16 bg-background/80 backdrop-blur-md border-b border-divider z-sticky flex items-center px-6 justify-between">
+      <header className="fixed top-0 left-0 right-0 h-16 bg-black/60 backdrop-blur-md border-b border-glass-border z-sticky flex items-center px-6 justify-between">
         {/* Left: LUMA */}
         <div className="flex items-center gap-4">
           {/* Mobile hamburger */}
           <button
             onClick={() => setIsMobileMenuOpen(true)}
-            className="md:hidden text-secondary-text hover:text-primary-text transition-colors p-1 rounded-medium hover:bg-glass-surface focus:outline-none focus:ring-2 focus:ring-focus-ring"
+            className="md:hidden text-secondary-text hover:text-primary-text transition-colors p-1.5 rounded-medium hover:bg-glass-surface focus:outline-none focus:ring-2 focus:ring-focus-ring"
             aria-label="Open menu"
           >
             <Menu className="w-5 h-5" />
@@ -114,7 +112,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
       {/* Under Navbar Layout */}
       <div className="flex flex-1 pt-16">
         {/* Desktop Sidebar (280px) */}
-        <aside className="hidden md:block w-[280px] bg-primary-surface border-r border-divider h-[calc(100vh-64px)] fixed top-16 left-0 shrink-0 select-none z-fixed overflow-y-auto">
+        <aside className="hidden md:block w-[280px] bg-black/40 backdrop-blur-md border-r border-glass-border h-[calc(100vh-64px)] fixed top-16 left-0 shrink-0 select-none z-fixed overflow-y-auto">
           {sidebarContent}
         </aside>
 
@@ -128,8 +126,8 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
             />
 
             {/* Drawer content */}
-            <aside className="relative flex flex-col w-[280px] bg-primary-surface h-full border-r border-divider shadow-soft-lg animate-fast z-10">
-              <div className="h-16 flex items-center justify-between px-6 border-b border-divider">
+            <aside className="relative flex flex-col w-[280px] bg-black/80 backdrop-blur-md border-r border-glass-border h-full shadow-soft-lg animate-fast z-10">
+              <div className="h-16 flex items-center justify-between px-6 border-b border-glass-border">
                 <span className="text-subheading font-bold tracking-[0.2em] text-primary-text">LUMA</span>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}

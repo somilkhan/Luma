@@ -115,3 +115,34 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+
+/* Global resets for premium OLED look and feel */
+a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+a:hover, a:focus, a:active {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
