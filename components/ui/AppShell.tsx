@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Avatar } from "./Avatar";
+import { Film, Sparkles, BookOpen, Search, Settings, Menu, X } from "lucide-react";
 
 export interface AppShellProps {
   children: React.ReactNode;
@@ -14,192 +14,157 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const navigationItems = [
-    { name: "Home", href: "/", icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-    )},
-    { name: "Cinema", href: "/cinema", icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
-      </svg>
-    )},
-    { name: "Anime", href: "/anime", icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-      </svg>
-    )},
-    { name: "Read", href: "/read", icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-      </svg>
-    )},
-    { name: "Search", href: "/search", icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
-    )},
+    { name: "Cinema", href: "/cinema", icon: <Film className="w-5 h-5" /> },
+    { name: "Anime", href: "/anime", icon: <Sparkles className="w-5 h-5" /> },
+    { name: "Read", href: "/read", icon: <BookOpen className="w-5 h-5" /> },
   ];
 
+  const handleLinkClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const sidebarContent = (
+    <div className="flex flex-col h-full bg-primary-surface">
+      {/* Navigation Items */}
+      <nav className="flex-1 px-4 py-6 space-y-2">
+        {navigationItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.name}
+              href={item.href}
+              onClick={handleLinkClick}
+              className={`flex items-center gap-3 px-4 py-3 rounded-medium transition-all duration-200 ${
+                isActive
+                  ? "glass text-primary-text font-medium"
+                  : "text-secondary-text hover:text-primary-text hover:bg-glass-surface"
+              }`}
+            >
+              {item.icon}
+              <span className="text-body">{item.name}</span>
+            </Link>
+          );
+        })}
+
+        {/* Divider */}
+        <div className="h-[1px] bg-divider my-4" />
+
+        {/* Settings Item */}
+        <div className="px-4">
+          <div className="flex items-center justify-between text-muted-text text-body py-3 cursor-not-allowed select-none">
+            <span className="flex items-center gap-3">
+              <Settings className="w-5 h-5" />
+              <span>Settings</span>
+            </span>
+            <span className="text-caption bg-secondary-surface px-1.5 py-0.5 rounded-small border border-divider text-[10px] tracking-normal font-normal text-muted-text normal-case">
+              Soon
+            </span>
+          </div>
+        </div>
+      </nav>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-background text-primary-text flex flex-col md:flex-row font-sans">
-      
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-60 bg-primary-surface border-r border-divider h-screen sticky top-0 shrink-0 select-none z-sticky">
-        {/* Logo */}
-        <div className="h-20 flex items-center px-lg border-b border-divider">
-          <Link href="/" className="text-heading font-extrabold tracking-[0.15em] text-primary-text hover:opacity-90 transition-opacity">
+    <div className="min-h-screen bg-background text-primary-text flex flex-col font-sans selection:bg-white/10 selection:text-white">
+      {/* Fixed Header/Navbar (64px) */}
+      <header className="fixed top-0 left-0 right-0 h-16 bg-background/80 backdrop-blur-md border-b border-divider z-sticky flex items-center px-6 justify-between">
+        {/* Left: LUMA */}
+        <div className="flex items-center gap-4">
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="md:hidden text-secondary-text hover:text-primary-text transition-colors p-1 rounded-medium hover:bg-glass-surface focus:outline-none focus:ring-2 focus:ring-focus-ring"
+            aria-label="Open menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+          
+          <Link href="/" className="text-subheading font-bold tracking-[0.2em] text-primary-text hover:opacity-90 transition-opacity">
             LUMA
           </Link>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 px-md py-lg space-y-xs">
-          {navigationItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`flex items-center space-x-md px-md py-sm rounded-medium text-body transition-all duration-150 ${
-                  isActive
-                    ? "bg-secondary-surface text-primary-text border-l-2 border-primary-text"
-                    : "text-secondary-text hover:text-primary-text hover:bg-secondary-surface"
-                }`}
-              >
-                {item.icon}
-                <span>{item.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Guest and Settings Footer */}
-        <div className="p-lg border-t border-divider space-y-md">
-          {/* Guest Badge Placeholder */}
-          <div className="flex items-center space-x-md bg-secondary-surface/55 px-md py-sm rounded-medium border border-divider">
-            <Avatar fallback="G" size="sm" />
-            <div className="min-w-0">
-              <p className="text-small font-semibold text-primary-text truncate">Guest Mode</p>
-              <p className="text-caption text-muted-text truncate">Luma Preview</p>
+        {/* Center: Search input (disabled placeholder) */}
+        <div className="hidden md:flex flex-1 justify-center max-w-md mx-auto">
+          <div className="relative w-full">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-muted-text" />
             </div>
-          </div>
-
-          {/* Settings Placeholder */}
-          <div className="flex items-center justify-between text-muted-text text-small hover:text-primary-text cursor-not-allowed transition-colors py-xs">
-            <span className="flex items-center space-x-sm">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>Settings</span>
-            </span>
-            <span className="text-caption bg-secondary-surface px-xs py-[2px] rounded-small border border-divider text-[10px]">Soon</span>
+            <input
+              type="text"
+              disabled
+              placeholder="Search movies, TV shows, anime, or books..."
+              className="block w-full pl-10 pr-4 py-2 text-small bg-secondary-surface border border-glass-border rounded-pill text-muted-text placeholder-muted-text cursor-not-allowed opacity-60 focus:outline-none"
+            />
           </div>
         </div>
-      </aside>
 
-      {/* Mobile Top Navbar */}
-      <header className="md:hidden flex items-center justify-between px-lg h-16 bg-primary-surface border-b border-divider sticky top-0 z-sticky select-none">
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-primary-text focus:outline-none p-xs hover:bg-secondary-surface rounded-medium transition-colors"
-          aria-label="Toggle Menu"
-        >
-          {isMobileMenuOpen ? (
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
-        </button>
-
-        <Link href="/" className="text-subheading font-extrabold tracking-[0.15em] text-primary-text" onClick={() => setIsMobileMenuOpen(false)}>
-          LUMA
-        </Link>
-
-        {/* Profile Placeholder for Mobile */}
-        <Avatar fallback="G" size="sm" />
+        {/* Right: Guest Mode badge */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 bg-glass-surface border border-glass-border rounded-pill">
+            <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
+            <span className="text-caption font-semibold text-secondary-text tracking-wider text-[11px] normal-case">
+              Guest Mode
+            </span>
+          </div>
+        </div>
       </header>
 
-      {/* Mobile Sidebar (Drawer Overlay) */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-modal md:hidden flex">
-          {/* Overlay */}
-          <div 
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-          
-          {/* Drawer content */}
-          <aside className="relative flex flex-col w-64 bg-primary-surface h-full border-r border-divider p-md shadow-soft-lg animate-fast">
-            <div className="flex items-center justify-between mb-xl pb-md border-b border-divider">
-              <span className="text-subheading font-extrabold tracking-[0.15em] text-primary-text">LUMA</span>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="text-muted-text hover:text-primary-text">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+      {/* Under Navbar Layout */}
+      <div className="flex flex-1 pt-16">
+        {/* Desktop Sidebar (280px) */}
+        <aside className="hidden md:block w-[280px] bg-primary-surface border-r border-divider h-[calc(100vh-64px)] fixed top-16 left-0 shrink-0 select-none z-fixed overflow-y-auto">
+          {sidebarContent}
+        </aside>
 
-            {/* Nav */}
-            <nav className="flex-1 space-y-xs">
-              {navigationItems.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center space-x-md px-md py-sm rounded-medium text-body transition-all duration-150 ${
-                      isActive
-                        ? "bg-secondary-surface text-primary-text border-l-2 border-primary-text"
-                        : "text-secondary-text hover:text-primary-text hover:bg-secondary-surface"
-                    }`}
-                  >
-                    {item.icon}
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-            </nav>
+        {/* Mobile Sidebar Slide-out Drawer */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-modal md:hidden flex">
+            {/* Overlay */}
+            <div
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
 
-            {/* Mobile Sidebar Footer */}
-            <div className="pt-md border-t border-divider space-y-md">
-              <div className="flex items-center space-x-md bg-secondary-surface/55 px-md py-sm rounded-medium border border-divider">
-                <Avatar fallback="G" size="sm" />
-                <div>
-                  <p className="text-small font-semibold text-primary-text">Guest Mode</p>
-                  <p className="text-caption text-muted-text">Luma Preview</p>
-                </div>
+            {/* Drawer content */}
+            <aside className="relative flex flex-col w-[280px] bg-primary-surface h-full border-r border-divider shadow-soft-lg animate-fast z-10">
+              <div className="h-16 flex items-center justify-between px-6 border-b border-divider">
+                <span className="text-subheading font-bold tracking-[0.2em] text-primary-text">LUMA</span>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-muted-text hover:text-primary-text p-1.5 rounded-medium hover:bg-glass-surface transition-colors focus:outline-none focus:ring-2 focus:ring-focus-ring"
+                  aria-label="Close menu"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto">
+                {sidebarContent}
+              </div>
+            </aside>
+          </div>
+        )}
+
+        {/* Main Content Area - padded to the right to clear Sidebar */}
+        <div className="flex-1 flex flex-col min-h-[calc(100vh-64px)] md:pl-[280px]">
+          <main className="flex-1 px-6 py-12 md:px-12 md:py-16 max-w-7xl mx-auto w-full flex flex-col justify-center">
+            {children}
+          </main>
+
+          {/* Footer */}
+          <footer className="border-t border-divider bg-primary-surface py-6 text-center text-small text-muted-text select-none">
+            <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-xs">© {new Date().getFullYear()} Luma. All rights reserved.</p>
+              <div className="flex space-x-6 text-caption text-xs tracking-normal normal-case">
+                <span className="hover:text-secondary-text cursor-not-allowed transition-colors">Terms</span>
+                <span className="hover:text-secondary-text cursor-not-allowed transition-colors">Privacy</span>
+                <span className="hover:text-secondary-text cursor-not-allowed transition-colors">Support</span>
               </div>
             </div>
-          </aside>
+          </footer>
         </div>
-      )}
-
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-screen">
-        <main className="flex-1 px-lg py-xl max-w-7xl mx-auto w-full">
-          {children}
-        </main>
-
-        {/* Footer */}
-        <footer className="border-t border-divider bg-primary-surface py-lg text-center text-small text-muted-text select-none">
-          <div className="max-w-7xl mx-auto px-lg flex flex-col md:flex-row items-center justify-between gap-md">
-            <p>© {new Date().getFullYear()} Luma. All rights reserved.</p>
-            <div className="flex space-x-lg text-caption">
-              <span className="hover:text-secondary-text cursor-not-allowed">Terms</span>
-              <span className="hover:text-secondary-text cursor-not-allowed">Privacy</span>
-              <span className="hover:text-secondary-text cursor-not-allowed">Support</span>
-            </div>
-          </div>
-        </footer>
       </div>
-
     </div>
   );
 };

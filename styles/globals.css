@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
   --color-background: #000000;
   --color-primary-surface: #0A0A0A;
   --color-secondary-surface: #111111;
